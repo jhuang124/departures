@@ -1,0 +1,20 @@
+/* Fonts (PLAN.md §2): Jost for the geometric capitals and tabular counts; Inter as the tabular fallback.
+   Only the latin subsets load in practice (unicode-range); the italics are never used. */
+@import '@fontsource-variable/jost/wght.css';
+@import '@fontsource-variable/inter/wght.css';
+
+:root {
+  /* titles, names, words: Jost 600 caps, tracked (0.16 em titles, 0.12 em names, 0.22 em words) */
+  --font-caps: 'Jost Variable', 'Jost', 'Futura', 'Century Gothic', sans-serif;
+  /* records and lines */
+  --font-text: 'Jost Variable', 'Jost', 'Futura', sans-serif;
+  /* counts: tabular figures (verified at 18 px, artifacts/foundation/tnum-18px.png) */
+  --font-num: 'Jost Variable', 'Inter Variable', sans-serif;
+  --num-features: 'tnum' 1, 'lnum' 1;
+}
+
+.tnum {
+  font-family: var(--font-num);
+  font-feature-settings: var(--num-features);
+  font-variant-numeric: tabular-nums lining-nums;
+}

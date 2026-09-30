@@ -21,10 +21,13 @@ Its setup:
 - **Seen:** Iron Atlas's `docs/RULES.md` and `src/game/{data,engine}.ts`, read as a checked reference.
 - **Checked from memory:** every rule and every row of Appendices A–C, against the 2015 rulebook and the physical
   board. They agree.
-- **Page numbers** follow Iron Atlas's citations of the 2015 PDF: p. 2 components and setup, p. 3 the turn,
-  drawing and claiming, p. 4 double routes, tickets, the end and scoring.
-- **Open (Phase 0):** with John's OK the lead fetches the PDF into `_claude/rules/`, and Codex `gpt-6-astra` reads
-  this file against it. Corrections are listed in §Differences with the date.
+- **Page numbers** in the 2015 PDF: p. 2 components, setup and the start of the turn; p. 3 drawing, claiming and
+  double routes; p. 4 tickets, the end and scoring (corrected 2026-09-30 from the cross-read).
+- **Cross-read (2026-09-30):** Codex `gpt-6-astra` read this file against its own knowledge of the 2015 rulebook
+  and the physical board (no PDF was downloaded; John was away). It found no lane, ticket, city or scoring-data
+  error and seven wording or labelling corrections, all applied below and listed in §Differences. The review is
+  in `_claude/reviews/2026-09-30-astra-rules-crossread.md`. Residual risk: an error shared by both models and Iron
+  Atlas; John's playtest is the last check.
 
 **ID scheme.**
 
@@ -62,11 +65,11 @@ Its setup:
 
 | Colour | Car type |
 |---|---|
-| purple | Box (some printings call it pink) |
-| white | Passenger |
-| blue | Tanker |
-| yellow | Reefer |
-| orange | Freight |
+| purple | Freight (some printings call the colour pink) |
+| white | Reefer |
+| blue | Passenger |
+| yellow | Box |
+| orange | Tanker |
 | black | Hopper |
 | red | Coal |
 | green | Caboose |
@@ -83,10 +86,10 @@ Its setup:
   Returned tickets go to the bottom of the ticket deck. *Resolution:* offers are made in seat order, starting with
   the first player, and returns go under the deck in the order they were offered.
 - **R-S5.** First player. The rulebook says the most experienced traveller goes first, then play passes clockwise.
-  *Interpretation:* the first seat is drawn from the game seed and recorded. H3 lets John set it to the first seat
-  row. Seat order is clockwise.
+  *Digital deviation:* the first seat is drawn from the game seed and recorded (the app cannot know who is most
+  experienced). H3 lets John set it to the first seat row instead. Seat order is clockwise.
 
-## The turn (p. 3)
+## The turn (p. 2–3)
 
 - **R-A1.** On your turn you do exactly one of three things:
   1. draw train cards
@@ -109,15 +112,17 @@ Its setup:
   up. This repeats as often as needed, including at setup and mid-draw.
 - **R-D7.** When a card is needed and the deck is empty, the discard pile is shuffled to form a new deck. The market
   and hands are untouched.
-- **R-D8.** If the deck and the discard are both empty, empty market slots stay empty. You may draw only if a legal
-  card exists. If none does, you must claim a route or draw tickets instead.
+- **R-D8.** *Interpretation:* if the deck and the discard are both empty, empty market slots stay empty. You may
+  still take a legal face-up card (the rulebook says no train cards may be drawn in this case without saying what
+  becomes of the face-up ones; this reading keeps them playable). If no legal card exists, you must claim a route
+  or draw tickets instead.
 - **R-D9.** If after your first card no legal second card exists, your turn ends (`drawEnded: noSecondCard`). This
   happens when the deck and discard are empty and the market is empty or holds only locomotives.
 - **R-D10.** *Interpretation:* the second draw is **required** whenever a legal one exists. This is how the digital
   editions play it. H2 makes it optional.
 - **R-D11.** There is no hand limit.
 
-## Claiming a route (p. 3; doubles p. 4)
+## Claiming a route (p. 3; doubles p. 3)
 
 - **R-C1.** You may claim any open lane anywhere on the board. It doesn't need to connect to your other routes.
 - **R-C2.** You pay exactly as many cards as the route has spaces.
@@ -149,7 +154,8 @@ Its setup:
   of the ticket deck, in offer order.
 - **R-T2.** If fewer than 3 tickets remain, you draw all that remain. Keep at least 1 still applies.
 - **R-T3.** If the ticket deck is empty, drawing tickets is not a legal action (`noTickets`).
-- **R-T4.** Tickets are secret until the end and can't be discarded. How many tickets each player holds is public.
+- **R-T4.** Tickets are secret until the end and can't be discarded. *Resolution (information policy):* how many
+  tickets each player holds is public, as it is at a physical table where the cards in a hand can be counted.
 - **R-T5.** A ticket is complete when a continuous chain of **your own** claimed routes joins its two cities.
   Opponents' routes never count.
 - **R-T6.** At the end, a completed ticket adds its value and an incomplete one subtracts it.
@@ -159,8 +165,9 @@ Its setup:
 
 - **R-E1.** Final round trigger. At the **end** of a turn, if that player has 0, 1 or 2 trains left and no final
   round is running, the final round begins. Every player, **including** the one who triggered it, gets exactly one
-  more turn; the game ends after the triggering player's final turn. *Implementation:* `turnsLeft = number of
-  seats`, decremented at each turn's end.
+  more turn; the game ends after the triggering player's final turn. *Implementation:* when the trigger fires at
+  the end of turn T, set `turnsLeft = number of seats`; decrementing begins at the end of turn T+1 (the **next**
+  turn), never at the end of the triggering turn itself. The game ends when `turnsLeft` reaches 0.
 - **R-E2.** The final round triggers once. Other players dropping to 2 or fewer trains during it changes nothing.
 - **R-E3.** Longest continuous path. Each player's longest path is the longest **trail** over their own routes,
   measured in trains (the sum of lane lengths), not in routes. It may pass through a city more than once and may
@@ -190,13 +197,16 @@ action).
 - **R-X1.** *Resolution:* refilling empty slots. Whenever cards enter the discard (a claim) and market slots are
   empty because the deck ran dry, the empty slots are refilled from the deck, reshuffling the discard first if
   needed (R-D7), in slot order, at the end of that action. R-D6 then applies.
-- **R-X2.** *Resolution:* the pathological market. Sometimes the cards available (market, deck and discard) can't
-  make a market with 2 or fewer locomotives. This happens when fewer than `min(5, pool) − 2` of them are not
-  locomotives. Then the market stays as dealt and no clearing happens.
-  - Otherwise, clears within one refill are capped at `ceil(pool / 5) + 1`. After the cap, the market stays as
-    dealt until the next refill.
+- **R-X2.** *Resolution:* the pathological market. The rulebook has no cap: whenever 3 or more face-up cards are
+  locomotives, the market is cleared and redealt, as often as it takes. The engine does exactly that **whenever a
+  legal market is still possible**. The only exception is when the cards available (market, deck and discard)
+  cannot make a market with 2 or fewer locomotives, which happens when fewer than `min(5, pool) − 2` of them are
+  not locomotives. Then the market stays as dealt and no clearing happens.
+  - There is no retry cap while a legal market is possible (an earlier draft capped clears at `ceil(pool / 5) + 1`;
+    the Astra cross-read flagged it as a rules deviation and it was removed 2026-09-30). Fuzz guards the loop by
+    the impossibility test above, not by a counter.
   - It is deterministic from the seed.
-  - The invariant "fewer than 3 face-up locomotives" is waived only in these cases.
+  - The invariant "fewer than 3 face-up locomotives" is waived only in the impossible case.
 - **R-X3.** *Resolution:* reshuffle order. A reshuffle uses the game rng. The new deck is the whole discard. Cards in
   the market and in hands never enter it.
 - **R-X4.** *Resolution:* tickets run out. When the ticket deck is empty, the `TICKETS` word shows the plain reason
@@ -248,17 +258,27 @@ None of these changes a score.
 |---|---|---|---|
 | Longest path with no routes | when every maximum is 0, everyone gets 10 | the bonus needs length ≥ 1 (R-E4) | the rulebook is silent; a bonus for no railroad reads wrong |
 | Market order | splices the taken card out; the rest shift | fixed slots, refilled in place (R-D5) | presentation, for pillar 2; no rules effect |
-| Pathological market | up to 32 clears, then a constructed legal market | the market stays as dealt; clears are capped (R-X2) | simpler, deterministic, keeps every card where it was dealt |
+| Pathological market | up to 32 clears, then a constructed legal market | clear as often as needed while a legal market is possible; otherwise the market stays as dealt (R-X2) | matches the rulebook; deterministic; keeps every card where it was dealt |
 | Stalemate | ends when a pass happens and no player has a legal claim | ends after a full cycle of passes (R-E7) | a player may still draw tickets or cards on a later turn; one cycle proves nobody can act |
 | Empty-slot refill after the deck dries | refills on the next draw | refills at the end of the action that fed the discard (R-X1) | slots never sit empty while cards exist |
 | Colour names | `wild` | `loco` | naming only |
 | Ticket and lane data | 36 / 100 / 30 | identical, row for row | verified from memory against the 2015 board |
 
-**From the 2015 PDF:** none recorded yet. The Phase 0 cross-read fills this in. Each correction gets a date, the
-rule ID, what changed, and the PDF page.
+**From the 2015 rulebook, via the Astra cross-read (2026-09-30):**
 
-**From SOUL's moment and the moodboard** (the rules win; raised with John as PLAN Soul question 1):
-- SOUL's moment has Priya pay "five yellow cards" for Helena–Duluth. On this map that lane is **orange, length 6**.
+| ID / row | Was | Now | Page |
+|---|---|---|---|
+| Components car types | purple Box, white Passenger, blue Tanker, yellow Reefer, orange Freight | purple Freight, white Reefer, blue Passenger, yellow Box, orange Tanker | cards |
+| R-S5 / H3 | seeded random first player called an interpretation | labelled a digital deviation; rulebook = most experienced traveller | 2 |
+| R-D8 | stated as rule | labelled an interpretation (rulebook forbids drawing when deck and discard are empty, silent on face-up cards) | 3 |
+| R-T4 | public ticket counts stated as rule | labelled an information-policy resolution | 4 |
+| R-E1 | `turnsLeft` decremented at each turn's end (ambiguous) | decrementing begins at the end of the turn after the trigger | 4 |
+| R-X2 | clears capped at `ceil(pool/5)+1` even when a legal market was possible | no cap while a legal market is possible; stays as dealt only when impossible | 3 |
+| Page refs | turn p. 3, doubles p. 4 | turn p. 2, doubles p. 3 | — |
+
+**From SOUL's moment and the moodboard** (the rules win; SOUL's moment was corrected to "six orange" 2026-09-30):
+- SOUL's moment originally had Priya pay "five yellow cards" for Helena–Duluth. On this map that lane is **orange,
+  length 6**, and the moment now says so.
 - Frame 3's band reads `HELENA · DULUTH · 8`. No such ticket exists. The 8-point Duluth ticket is Duluth–Houston.
   The moment's fixture uses Duluth–El Paso (10).
 

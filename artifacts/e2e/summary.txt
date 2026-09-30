@@ -1,0 +1,3 @@
+PASS smoke (logic, 2 s) 35/35 passed, 0 console errors
+
+build 0 s · logic lane 2 s (1 flows, 1 workers) · timing lane 0 s (0 flows) · total 2 s

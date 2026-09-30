@@ -7,7 +7,32 @@ Then `docs/PLAN.md` (architecture, file ownership, phases, acceptance) and `docs
 top is current, the ranking below it is history.
 
 ## Commands
-See `docs/PLAN.md` §Commands until the scaffold lands; then this section is filled in by the lead.
+Node 24: `export PATH=/Users/jhuang/.nvm/versions/node/v24.14.0/bin:$PATH`. Only the scaffold owner runs `npm install`.
+
+```
+npm run dev              vite --host 127.0.0.1 --port 5390 --strictPort   (lead only) → http://127.0.0.1:5390/
+npx vite --host 127.0.0.1 --port <p> --strictPort                         (agents: own port, background; kill on finish)
+npm test                 vitest run                                       (tests/**/*.test.ts; e2e is not vitest)
+npm run typecheck        tsc --noEmit
+npm run build            tsc --noEmit && vite build                       (dist/, base /departures/)
+npm run test:e2e -- [--port <p>] [flow ...]      logic lane parallel, then timing lane serial (default port 5399)
+npm run test:e2e:quick -- [--port <p>]           smoke + turn + setup + resume (unwritten ones skipped with a note)
+npm run preview:pages    vite preview on 5390 → http://127.0.0.1:5390/departures/ (run `npm run build` first)
+npm run sim              tsx scripts/sim.ts --games 500 --seats 4         (A; artifacts/sim/*.json)
+npm run board            tsx scripts/build-board.ts && tsx scripts/verify-board.ts   (G)
+npm run relief           tsx scripts/bake-relief.ts                       (G)
+npm run verify:audio     tsx scripts/verify-audio.ts                      (S)
+```
+
+- **Dev serves at `/`, build and preview at `/departures/`.** Sandboxes are dev-server pages only:
+  `/land.html` (L), `/trains.html` (P), `/audio-lab.html` (S), `/ui-gallery.html` (U).
+- **One e2e flow by hand** against your own dev server:
+  `DEP_URL=http://127.0.0.1:<p>/ npx tsx tests/e2e/<flow>.e2e.ts` (a logic-lane flow pins instant speed; `E2E_SPEED=real`
+  overrides). `scripts/e2e.ts --dev` uses the dev server (`DEP_E2E=1`: no HMR) instead of the build.
+- **Test hooks:** `window.__dep` (`src/game/hooks.ts`) exists in dev and in the e2e build (`VITE_E2E=1`), never in
+  the shipped build.
+- **Deploy:** push to `main` → `.github/workflows/pages.yml` runs `npm test` and `npm run build`, then deploys `dist/`
+  to https://jhuang124.github.io/departures/. Only the lead pushes.
 
 ## Rules for agents working here
 - Stay inside the files your brief says you own. Need a change elsewhere? Put it under "Requests" in your final

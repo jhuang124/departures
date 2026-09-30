@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Departures · Print and trains</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #15130F; color: #E9DFC6; overflow: hidden; }
+      #sandbox { position: absolute; inset: 0; }
+      .shell-note { position: absolute; left: 24px; bottom: 20px; font: 600 15px/1.4 var(--font-caps);
+        letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.6; }
+    </style>
+  </head>
+  <body data-sandbox="trains">
+    <!-- Sandbox shell written by F (PLAN.md §2.4). Owner from Phase 1: P. Dev server only (not in the build). -->
+    <div id="sandbox"></div>
+    <script type="module">
+      import '/src/shared/fonts.css';
+      // P replaces this with its own entry, e.g. import '/src/.../lab.ts'.
+      const note = document.createElement('div');
+      note.className = 'shell-note';
+      note.textContent = 'Print and trains · shell';
+      document.getElementById('sandbox').append(note);
+    </script>
+  </body>
+</html>

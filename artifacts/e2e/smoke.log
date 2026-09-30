@@ -1,0 +1,40 @@
+(instant speed: a logic-lane flow, tests/e2e/lanes.ts; E2E_SPEED=real runs it at 1x)
+PASS 1280x800: window.__dep is ready (build phase0-stub+board)
+PASS 1280x800: no __dep warnings (0)
+PASS 1280x800: top border 44 = 44
+PASS 1280x800: right border (the siding) 164 = 164
+PASS 1280x800: bottom border (the dock) 120 = 120
+PASS 1280x800: hand tier 48 + title tier 72 = 48 + 72
+PASS 1280x800: left border 16 = 16
+PASS 1280x800: board 1100 × 636 = 1100 × 636
+PASS 1280x800: title tier reads DEPARTURES
+PASS 1280x800: set in Jost, loaded ("Jost Variable", weight 600)
+PASS 1280x800: title line 36 px, tracking 0.16 em
+PASS 1280x800: DEPARTURES in the one gold (rgb(240, 178, 74))
+PASS 1280x800: centred in the title tier
+PASS 1280x800: dark border (top 21,19,15 · right 21,19,15 · bottomRight 21,19,15 · left 21,19,15)
+PASS 1280x800: R's stub board printed: 36 cities, 309 slots
+PASS tnum specimen at 18 px
+PASS Jost tnum: 1s 110.6 = 0s 110.6 = mixed 110.6 px
+PASS Jost proportional differs (1s 88.3 vs 0s 115.7 px), so tnum is really applied
+note 1280x800: __dep.vm() is null (Phase 0 stub); Q extends smoke to new game → first turn in Phase 1
+PASS 1280x800: no console errors or failed requests
+PASS 1920x1080: window.__dep is ready (build phase0-stub+board)
+PASS 1920x1080: no __dep warnings (0)
+PASS 1920x1080: top border 60 = 60
+PASS 1920x1080: right border (the siding) 236 = 236
+PASS 1920x1080: bottom border (the dock) 172 = 172
+PASS 1920x1080: hand tier 68 + title tier 104 = 68 + 104
+PASS 1920x1080: left border 24 = 24
+PASS 1920x1080: board 1660 × 848 = 1660 × 848
+PASS 1920x1080: title tier reads DEPARTURES
+PASS 1920x1080: set in Jost, loaded ("Jost Variable", weight 600)
+PASS 1920x1080: title line 50 px, tracking 0.16 em
+PASS 1920x1080: DEPARTURES in the one gold (rgb(240, 178, 74))
+PASS 1920x1080: centred in the title tier
+PASS 1920x1080: dark border (top 21,19,15 · right 21,19,15 · bottomRight 21,19,15 · left 21,19,15)
+PASS 1920x1080: R's stub board printed: 36 cities, 309 slots
+note 1920x1080: __dep.vm() is null (Phase 0 stub); Q extends smoke to new game → first turn in Phase 1
+PASS 1920x1080: no console errors or failed requests
+
+35/35 passed, 0 console errors

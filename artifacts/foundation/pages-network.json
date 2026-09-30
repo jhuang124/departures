@@ -1,0 +1,22 @@
+[
+  {
+    "status": 200,
+    "url": "http://127.0.0.1:5390/departures/",
+    "type": "document"
+  },
+  {
+    "status": 200,
+    "url": "http://127.0.0.1:5390/departures/assets/index-BgqdaZWL.css",
+    "type": "stylesheet"
+  },
+  {
+    "status": 200,
+    "url": "http://127.0.0.1:5390/departures/assets/index-Cms1J8IN.js",
+    "type": "script"
+  },
+  {
+    "status": 200,
+    "url": "http://127.0.0.1:5390/departures/assets/jost-latin-wght-normal-ObQm3Zd1.woff2",
+    "type": "font"
+  }
+]

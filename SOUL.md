@@ -9,7 +9,7 @@ You build the railroad that finishes the picture, and every train that leaves ma
 ## The moment
 Turn 30, on the couch. The continent lies still in late golden light: cream plains, lavender ranges, deep teal
 lakes, dark pine in the Northwest, a backlit cloud bank over the Pacific. Priya taps the route from Helena to
-Duluth and pays five yellow cards. A whistle, far off. Her brass train pulls out of Helena, slow on the first
+Duluth and pays six orange cards. A whistle, far off. Her brass train pulls out of Helena, slow on the first
 beat, then the chug picks up, steam trailing, and the last car settles at Duluth with a soft clank. The title bar
 reads `HELENA · DULUTH`. Sam, watching, says nothing; that was the route his ticket needed. He finds out for sure
 three turns later, when he opens his hand and the Duluth poster wears a small CANCELLED stamp. The board has not
@@ -37,7 +37,8 @@ is left.
 - **`_claude/moodboard/1-golden-hour-board.png`**: take the palette, the lavender ranges and cream plains, the one
   puffing locomotive, and the title bar as the dock; leave the fantasy geography and the route density, most
   slots are empty outlines and the land is quieter.
-- **`_claude/moodboard/3-ticket-poster-duluth.png`**: take all of it as what a ticket is.
+- **`_claude/moodboard/3-ticket-poster-duluth.png`**: take all of it as what a ticket is; the band reads the real
+  ticket (there is no Helena–Duluth ticket; Sam's is Duluth · El Paso · 10).
 - **`_claude/moodboard/4-ending-night-board.png`**: take the searchlights, the faint coasts, the sentence in the
   title bar; leave the lit carriage colours, a few lit things against a lot of dark.
 - **Leslie Ragan's *Chicago* and Chesley Bonestell's *New York Central Building*** (`ref-ragan-chicago.webp`,

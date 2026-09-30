@@ -786,15 +786,18 @@ A vertical rail, top to bottom:
 
    | Card | Glyph |
    |---|---|
-   | purple | box car |
-   | white | passenger |
-   | blue | tanker |
-   | yellow | reefer |
-   | orange | freight |
+   | purple | freight car |
+   | white | reefer |
+   | blue | passenger car |
+   | yellow | box car |
+   | orange | tanker |
    | black | hopper |
-   | red | coal |
+   | red | coal car |
    | green | caboose |
    | locomotive | all eight hues in bands, with the loco glyph |
+
+   (Mapping corrected 2026-09-30 from the Astra cross-read, `_claude/reviews/2026-09-30-astra-rules-crossread.md`;
+   the physical cards are purple = freight, white = reefer, blue = passenger, yellow = box, orange = tanker.)
 
    The glyph lets colour-blind players read cards without the hue.
 4. **The discard:** a 28 px strip with the top card's hue and a count.

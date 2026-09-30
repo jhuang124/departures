@@ -1,0 +1,41 @@
+{
+  "name": "departures",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Departures: a pass-and-play Ticket to Ride (USA, 2015 rules) for one laptop or TV.",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5390 --strictPort",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "test:e2e": "tsx scripts/e2e.ts",
+    "test:e2e:quick": "tsx scripts/e2e.ts --quick",
+    "sim": "tsx scripts/sim.ts --games 500 --seats 4",
+    "board": "tsx scripts/build-board.ts && tsx scripts/verify-board.ts",
+    "relief": "tsx scripts/bake-relief.ts",
+    "verify:audio": "tsx scripts/verify-audio.ts",
+    "preview:pages": "vite preview --host 127.0.0.1 --port 5390 --strictPort"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jost": "^5.3.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@types/d3-geo": "^3.1.1",
+    "@types/node": "^26.6.3",
+    "@types/pngjs": "^6.0.5",
+    "@types/three": "^0.186.0",
+    "@types/topojson-client": "^3.1.5",
+    "d3-geo": "^3.1.1",
+    "playwright": "^1.63.0",
+    "pngjs": "^7.0.0",
+    "topojson-client": "^3.1.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2",
+    "world-atlas": "^2.0.2"
+  }
+}
